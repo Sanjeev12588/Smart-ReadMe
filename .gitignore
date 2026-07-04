@@ -1,0 +1,20 @@
+# Python virtualenv and cache
+__pycache__/
+*.pyc
+venv/
+.venv/
+env/
+.env
+
+# Dynamic/Temporary directories
+temp_clones/
+.gemini/
+artifacts/
+
+# Frontend caches and modules
+frontend/node_modules/
+frontend/dist/
+
+# System files
+.DS_Store
+Thumbs.db
