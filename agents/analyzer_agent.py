@@ -26,6 +26,17 @@ class ProjectProfile(BaseModel):
     files_scanned: int = Field(description="Count of codebase files examined")
     files_ignored: int = Field(description="Count of files bypassed due to exclude rules")
     security_warnings: List[str] = Field(description="Warnings about hardcoded secrets or committed credentials")
+    
+    # Advanced metadata fields for premium README generation
+    screenshots: List[str] = Field(default_factory=list, description="List of detected screenshot or image file paths inside folders like assets, docs, images, screenshots, public.")
+    databases: List[str] = Field(default_factory=list, description="List of all detected database systems, e.g. SQLite, MongoDB, PostgreSQL, Redis, DynamoDB, etc.")
+    cloud_targets: List[str] = Field(default_factory=list, description="List of detected deployment/cloud targets, e.g. Docker, Vercel, Netlify, Railway, Render, AWS, Azure, GCP, etc.")
+    architecture_hints: List[str] = Field(default_factory=list, description="Inferred components of project architecture, e.g. Backend API, React Frontend, Authentication, Workers, Pipelines, Queues, etc.")
+    config_details: List[str] = Field(default_factory=list, description="Environment variables or configuration variables parsed from setup/config files with short explanations.")
+    api_endpoints: List[str] = Field(default_factory=list, description="Key API endpoints or Swagger/ReDoc URLs detected in the project.")
+    inferred_roadmap: List[str] = Field(default_factory=list, description="Roadmap items, future features, or TODO comments inferred from the codebase.")
+    contributing_info: str = Field(default="", description="Contribution guidelines or procedures found in files, or empty string.")
+    license_info: str = Field(default="", description="Project license type found, e.g. MIT, Apache 2.0, or empty string.")
 
 def get_analyzer_agent(client: LocalMCPClient) -> Agent:
     """Create the Project Analyzer Agent and bind the MCP client tools."""
