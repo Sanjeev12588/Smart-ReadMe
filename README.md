@@ -1,5 +1,7 @@
 # README Copilot
 
+![README Copilot Banner](docs/images/readme_copilot_banner.png)
+
 README Copilot is an innovative AI-powered application designed to revolutionize documentation generation. Leveraging a sophisticated multi-agent system, this tool intelligently analyzes project structures and dynamically generates comprehensive, professional README files. It integrates a robust FastAPI backend with Google's Gemini API for advanced natural language understanding, complemented by a sleek React frontend for an intuitive user experience.
 
 ## ✨ Key Features
@@ -161,36 +163,11 @@ To run this project, you will need to set up the following environment variables
 
 ## 🌐 Architecture Diagram
 
-This Mermaid flowchart illustrates the high-level architecture and data flow within the README Copilot application:
+The system adopts a multi-agent orchestration pipeline that leverages a local MCP (Model Context Protocol) client-server structure to safely interface with the local workspace.
 
-```mermaid
-graph TD
-    A[User] --> B(Frontend / CLI)
-    B -- "Request README" --> C{FastAPI Backend (api.py)}
+![System Architecture](docs/images/architecture_diagram.png)
 
-    C -- "Orchestrates" --> D1(Analyzer Agent)
-    C -- "Orchestrates" --> D2(Planner Agent)
-    C -- "Orchestrates" --> D3(README Agent)
-
-    D1 -- "Analyzes Project" --> E[Tools: Detector, Parser]
-    D2 -- "Plans Structure" --> E
-    D3 -- "Generates Content" --> E
-
-    E -- "Uses Prompts" --> F(Prompts Directory)
-    E -- "External API Call" --> G((Google Gemini API))
-
-    F --> G
-    G -- "AI Response" --> D1
-    G -- "AI Response" --> D2
-    G -- "AI Response" --> D3
-
-    D1 -- "Analysis Report" --> C
-    D2 -- "Plan Structure" --> C
-    D3 -- "Draft README" --> C
-
-    C -- "Final README" --> B
-    B --> A
-```
+For a deeper dive into agent sequence and sequence timelines, check out the [System Architecture deep-dive](docs/architecture.md).
 
 ## 📄 License
 
