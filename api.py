@@ -72,6 +72,7 @@ class TechProfileData(BaseModel):
     package_manager: str
     files_scanned: int
     files_ignored: int
+    project_type: str = Field("Other", description="Classified repository type")
 
 class GenerateResponse(BaseModel):
     success: bool
@@ -213,7 +214,8 @@ async def execute_generation_flow(target_path: str) -> tuple[str, str, TechProfi
         database=profile.database,
         package_manager=profile.package_manager,
         files_scanned=profile.files_scanned,
-        files_ignored=profile.files_ignored
+        files_ignored=profile.files_ignored,
+        project_type=profile.project_type
     )
     return readme_content, plan.project_name, tech_profile
 

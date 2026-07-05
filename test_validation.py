@@ -23,7 +23,8 @@ class TestGenerateValidation(unittest.IsolatedAsyncioTestCase):
             database="PostgreSQL",
             package_manager="pip",
             files_scanned=10,
-            files_ignored=2
+            files_ignored=2,
+            project_type="Full-Stack Application"
         )
 
     @patch("api.config.validate_environment")

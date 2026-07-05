@@ -28,17 +28,28 @@ You must return a structured JSON conforming to the following keys:
 10. `files_scanned`: Number of files scanned.
 11. `files_ignored`: Number of files ignored.
 12. `security_warnings`: Any warnings about committed secrets or unversioned credentials.
+13. `project_type`: Classify the repository into one of the following exact types:
+    - `Python Library`: Has setup.py, pyproject.toml configuration designed for packaging/distribution, `__init__.py` files, and is intended to be imported as a dependency.
+    - `FastAPI Backend`: Relies on FastAPI for web services or APIs (main entrypoints use FastAPI, import fastapi).
+    - `React Frontend`: Uses React library, package.json dependencies include react/react-dom, or Next.js frontend framework.
+    - `Full-Stack Application`: Combines both backend and frontend components (e.g. frontend React/Next.js alongside backend FastAPI/Express, or separate directories).
+    - `AI Agent`: Integrates agent toolkits, LLMs, prompt management, or multi-agent run loops (imports langchain, openai, crewai, google-genai, google-genai.types, etc.).
+    - `CLI Tool`: Executable script designed to be run from command line (uses click, typer, argparse, sys.argv, etc.).
+    - `Mobile App`: Built for mobile platforms (React Native, Flutter, Swift, Kotlin files present).
+    - `Data Science Project`: Focuses on data manipulation/analysis (pandas, numpy, matplotlib, jupyter notebooks `.ipynb` present).
+    - `Machine Learning Project`: Focuses on ML modeling, training (scikit-learn, pytorch, tensorflow, keras, transformers, and model artifacts/scripts present).
+    - `Other`: Fallback classification if it doesn't clearly fit the above descriptions.
 
 # Advanced Metadata (Extract using your tools, do not make them up)
-13. `screenshots`: A list of file paths to images/screenshots (e.g., png, jpg, webp, svg) found in folders such as: `assets/`, `docs/`, `images/`, `screenshots/`, `public/`.
-14. `databases`: A list of database tools or systems detected in the code or dependencies (e.g., MongoDB, PostgreSQL, Redis, SQLite).
-15. `cloud_targets`: A list of deployment targets or container tools detected (e.g. Docker, Vercel, Railway, Netlify, AWS, GCP, etc.).
-16. `architecture_hints`: A list of inferred architectural layers or components, e.g., "FastAPI Backend", "React Frontend", "MCP Stdio Client/Server", "SQLAlchemy Database Layer".
-17. `config_details`: Key configuration variable names or environment variables mapped to brief usage descriptions.
-18. `api_endpoints`: Key API routes, REST request paths, or Swagger documentation URLs detected (e.g., `/api/generate`, `/api/health`, `/docs`).
-19. `inferred_roadmap`: List of upcoming features or TODO notes parsed from comments (e.g. `# TODO: add caching`).
-20. `contributing_info`: Guidelines or summary of how to contribute parsed from files (e.g., CONTRIBUTING.md, if present).
-21. `license_info`: The license type parsed from LICENSE or setup files (e.g. MIT, Apache 2.0). If not found, use "Not Specified".
+14. `screenshots`: A list of file paths to images/screenshots (e.g., png, jpg, webp, svg) found in folders such as: `assets/`, `docs/`, `images/`, `screenshots/`, `public/`.
+15. `databases`: A list of database tools or systems detected in the code or dependencies (e.g., MongoDB, PostgreSQL, Redis, SQLite).
+16. `cloud_targets`: A list of deployment targets or container tools detected (e.g. Docker, Vercel, Railway, Netlify, AWS, GCP, etc.).
+17. `architecture_hints`: A list of inferred architectural layers or components, e.g., "FastAPI Backend", "React Frontend", "MCP Stdio Client/Server", "SQLAlchemy Database Layer".
+18. `config_details`: Key configuration variable names or environment variables mapped to brief usage descriptions.
+19. `api_endpoints`: Key API routes, REST request paths, or Swagger documentation URLs detected (e.g., `/api/generate`, `/api/health`, `/docs`).
+20. `inferred_roadmap`: List of upcoming features or TODO notes parsed from comments (e.g. `# TODO: add caching`).
+21. `contributing_info`: Guidelines or summary of how to contribute parsed from files (e.g., CONTRIBUTING.md, if present).
+22. `license_info`: The license type parsed from LICENSE or setup files (e.g. MIT, Apache 2.0). If not found, use "Not Specified".
 
 ## Tools
 Use the provided MCP filesystem tools to read directory trees and examine file contents. Do not assume or guess; use tools to check.

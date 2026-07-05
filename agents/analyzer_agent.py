@@ -26,6 +26,7 @@ class ProjectProfile(BaseModel):
     files_scanned: int = Field(description="Count of codebase files examined")
     files_ignored: int = Field(description="Count of files bypassed due to exclude rules")
     security_warnings: List[str] = Field(description="Warnings about hardcoded secrets or committed credentials")
+    project_type: str = Field(description="The classified repository type. Must be one of: 'Python Library', 'FastAPI Backend', 'React Frontend', 'Full-Stack Application', 'AI Agent', 'CLI Tool', 'Mobile App', 'Data Science Project', 'Machine Learning Project', or 'Other'.")
     
     # Advanced metadata fields for premium README generation
     screenshots: List[str] = Field(default_factory=list, description="List of detected screenshot or image file paths inside folders like assets, docs, images, screenshots, public.")

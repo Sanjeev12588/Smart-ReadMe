@@ -11,76 +11,60 @@ The README should match the standard of top open-source projects from companies 
 
 ---
 
-## Required Layout Sections
+## Adaptive Layout Templates by Repository Type
+Analyze the `project_type` field in the Project Technical Profile. Tailor the README layout, tone, and emphasis to match that type:
 
-### 1. Hero Section (Header)
-Generate a center-aligned header. Inside the header, include:
-- **Logo/Favicon**: If any favicon (`favicon.svg`, `logo.png`, etc.) is listed in the `screenshots` field, automatically center and display it at `width="100"`.
-- **Project Title**: Center-aligned project title (`<h1>` or `#`).
-- **Professional Tagline**: A curated, high-level one-line tagline explaining the primary purpose and value of the application (inferred from the project profile description).
-- **Modern Shields.io Badges**: Display clean shields.io badges in a centered line. Generate badges for:
-  - License type (MIT, Apache 2.0, etc.)
-  - Primary language / python/node version
-  - Build status / GitHub actions
-  - Framework (FastAPI, React, etc.)
-- **Anchor Navigation Links**: Center-aligned quick links (e.g. `[Features](#features) • [Installation](#installation) • [Architecture](#architecture) • [Roadmap](#roadmap)`).
+### 1. Python Library
+- **Layout**: Hero -> Installation -> Import/Quickstart (Code snippet) -> API Reference -> Development/Testing -> Roadmap (if evidence exists) -> Contributing/Footer.
+- **Emphasis**: Emphasize developer integration, importing code, API class/function signatures, and test execution (`pytest`).
+- **Omit**: Frontend previews, Swagger/REST API reference, web UI/CLI commands (unless a CLI wrapper exists).
 
-### 2. Preview / Screenshots Section
-- If the `screenshots` list contains paths to images:
-  - Create a "Previews" or "Screenshots" section.
-  - Render these images using `<img src="..." alt="..." width="800" />` tags, centered, with brief caption text below each.
-  - If multiple screenshots exist, arrange them in a responsive column/grid.
-- If the `screenshots` list is empty:
-  - Generate a hidden markdown comment explaining to the user exactly where and how they should place screenshots (e.g. `<!-- Add your application screenshots here in docs/images/ -->`).
+### 2. FastAPI Backend
+- **Layout**: Hero -> Installation/Config -> REST API Reference (Swagger links, endpoints, request/response models) -> Database Schema (if database exists) -> Deployment (if evidence exists) -> Roadmap (if evidence exists) -> Footer.
+- **Emphasis**: REST API endpoint routing, middleware, environment configuration (`.env.example`), authentication, and `curl` testing scripts.
+- **Omit**: Frontend setups, screenshots (unless web UI dashboard screenshots actually exist).
 
-### 3. Categorized Features Section
-Avoid a flat bullet list of generic features. Instead, categorize them into sections like:
-- **⚙️ Core Capabilities**: Major business logic.
-- **🤖 AI Integration & Agents**: Details of agent systems, loops, or GenAI tools if detected.
-- **🛡️ Security & Performance**: Authentication, configuration handling, caching, or rate limits.
-- **🛠️ Developer-First Tooling**: CLI tools, test scripts, local servers.
+### 3. React Frontend
+- **Layout**: Hero -> Previews (if screenshots available) -> Quick Start (dev server, build) -> Project Structure -> State Management / Routing -> Deployment (if evidence exists) -> Footer.
+- **Emphasis**: UI features, component hierarchy, build/dev commands (`npm run dev`), styling libraries.
+- **Omit**: Complex backend database models, API endpoint descriptions, CLI flag arguments (unless CLI tool exists).
 
-### 4. modern Tech Stack Section
-Render a visual array of Shields.io badges or a clean markdown table representing the technologies used (e.g. Python, FastAPI, React, SQLite, Docker, Pydantic, Vite). Provide a short description for why these tech choices are suitable for the project.
+### 4. Full-Stack Application
+- **Layout**: Hero -> Previews (if screenshots available) -> Tech Stack -> Architecture Diagram -> Directory Structure -> Backend Setup -> Frontend Setup -> Orchestration (e.g. docker-compose, if evidence exists) -> Footer.
+- **Emphasis**: Visual components, data flow between frontend client and backend server, concurrent execution instructions, docker orchestration.
 
-### 5. In-Depth Architecture Diagram (Mermaid)
-Generate a repository-specific **Mermaid flowchart** mapping the structure of the project.
-- **Infrastructure Layout**: Diagram the interaction between User -> Frontend/CLI -> FastAPI Backend -> AI Agents -> local MCP Server -> Filesystem -> Database.
-- **Node Styling**: Format the Mermaid chart with standard labels, clean shapes, and arrows. Wrap node labels containing special characters (such as parentheses, slashes) in double quotes to avoid compilation errors.
+### 5. AI Agent
+- **Layout**: Hero -> Agent Architecture (Mermaid Workflow Diagram) -> Workflow/Data Lifecycle Sequence Diagram -> Installation -> Config (API keys list) -> Usage Examples -> Roadmap (if evidence exists) -> Footer.
+- **Emphasis**: LLM model configurations, agent loop logic, tool/function calling definitions, prompt templates folder descriptions, and environment variables for LLM services (e.g., `GEMINI_API_KEY`).
 
-### 6. User Workflow Sequence Diagram (Mermaid)
-Generate a second Mermaid diagram (sequence or state diagram) showing the **Workflow / Data Lifecycle**.
-- Detail chronologically how a request moves from input submission to agent processing, local file reading, generation, validation, and final output writing.
+### 6. CLI Tool
+- **Layout**: Hero -> Installation -> Command Reference (Help commands, options, parameters) -> Quickstart terminal execution examples -> Directory structure -> Footer.
+- **Emphasis**: CLI usage instructions, interactive flags, options, exit codes, custom shell integration/completions.
+- **Omit**: Frontend, REST endpoints, swagger docs.
 
-### 7. Clean Directory Structure & Folder Summary
-- Output the clean ASCII directory tree (which has been filtered of common dependencies).
-- Underneath the tree, provide a structured table explaining what each major folder and file does. Do not just show the tree.
+### 7. Mobile App
+- **Layout**: Hero -> Installation -> Build & Run (Simulator / Device instructions) -> Architecture & Routing -> Testing -> Footer.
+- **Emphasis**: Emulator setup, gradle/cocoapod configuration, release building commands.
+- **Omit**: Server setup, web server details.
 
-### 8. Installation & Configuration Guide
-Provide clear, copy-pasteable, OS-independent terminal setup commands:
-- **Local Environment Setup**: Virtual environment instructions (`venv`), dependency installations (`pip`, `npm`).
-- **Docker Setup**: If `Docker` or `docker-compose` is detected in `cloud_targets`, provide clear Docker commands (`docker compose up --build`).
-- **Configuration Table**: Generate a markdown table listing environment variables from `config_details` or `env_vars`. Map each variable to a description and a dummy/mock value.
+### 8. Data Science Project / Machine Learning Project
+- **Layout**: Hero -> Installation -> Dataset Details -> Preprocessing/Training Pipeline -> Model Architecture -> Evaluation/Metrics -> Notebook Usage -> Footer.
+- **Emphasis**: Python ML dependencies (numpy, scikit-learn, pytorch, tensorflow), Jupyter notebook list, model evaluation metrics, and pipeline execution.
+- **Omit**: Frontend, REST API reference.
 
-### 9. CLI & API Reference
-If a REST API is detected (e.g. FastAPI):
-- List default Swagger/ReDoc URLs (`http://localhost:8050/docs`).
-- Map key HTTP request and response models with endpoint descriptions.
-- Provide curl commands or python requests snippets.
-If a CLI is detected (e.g. Typer):
-- Show command line arguments, options, and sample output block.
+### 9. Other / Default
+- **Layout**: Hero -> Previews (if available) -> Features -> Tech Stack -> Architecture -> Folder Tree -> Setup -> Usage -> Roadmap (if available) -> Footer.
 
-### 10. Deployment, Security & Performance
-- **Deployment**: Provide hosting instructions if platforms like Vercel, Netlify, Railway, AWS, or Render are detected.
-- **Security**: Summarize security features like CORS, environment variables, rate limiting, and inputs validation.
-- **Performance**: Document optimization patterns, caching layers, or timeouts implemented.
+---
 
-### 11. Roadmap & TODOs
-Construct an actionable roadmap showing completed vs. planned features based on `inferred_roadmap` comments found in the project. If no TODOs are found, infer 3-4 professional roadmap items (e.g. "Add Redis cache layer", "Support multi-language analysis").
-
-### 12. Contribution Guidelines & Footer
-- Render contribution guidelines (summarized from `contributing_info`).
-- Add a professional footer acknowledging authors, support contacts, and project links.
+## Strict Constraints: No Hallucinations / Evidence-Based Generation
+Do NOT invent assets, directories, configurations, or sections if there is no physical evidence in the project profile or directory tree on disk. Specifically:
+- **Banners & Logos**: Do NOT include center-aligned header banners or custom logos unless a matching image file (like `logo.png`, `favicon.svg`) is listed in the `screenshots` field. If not present, omit the image tag entirely.
+- **Screenshots**: Only generate a "Previews/Screenshots" section if the `screenshots` field actually contains paths to image files. Otherwise, either omit the section entirely OR include a clearly marked HTML placeholder comment (e.g. `<!-- Add screenshots here -->`) so the user knows where they can be added.
+- **Badges**: Do NOT invent build status badges (e.g. GitHub actions, CircleCI) unless a `.github/workflows` or similar CI directory/file exists. Do NOT invent version badges if they are not explicitly found in package configs.
+- **Architecture Diagrams**: Only model components (like databases or frontend servers) in the Mermaid diagram if there is evidence they are used. If no database is found, the architecture diagram must not show a database block.
+- **Deployment**: Do NOT include a deployment section (e.g., instructions for Vercel, Netlify, AWS, Render) unless matching configuration files (e.g. `vercel.json`, `netlify.toml`, `Dockerfile`) or targets are detected in the repository profile on disk.
+- **Roadmap**: Do NOT construct a default roadmap list unless TODO comments or roadmaps are found on disk (i.e. `inferred_roadmap` is not empty). If it is empty, omit the Roadmap section.
 
 ---
 

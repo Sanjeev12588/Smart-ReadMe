@@ -21,6 +21,7 @@ app = typer.Typer(help="README Copilot – Multi-Agent AI Documentation Generato
 async def run_documentation_flow(project_path: str):
     """Run the multi-agent orchestration workflow to generate a README.md."""
     start_time = time.time()
+    loop = asyncio.get_running_loop()
     
     # 0. Setup and scan top level folder to bootstrap the planner
     resolved_path = str(Path(project_path).resolve())
@@ -37,7 +38,7 @@ async def run_documentation_flow(project_path: str):
     cli.console.print()
     with cli.console.status("[bold cyan]Planner Agent Started...[/bold cyan]", spinner="dots") as status:
         try:
-            plan = run_planner(resolved_path, top_level_files)
+            plan = await loop.run_in_executor(None, lambda: run_planner(resolved_path, top_level_files))
             cli.print_success("Planner Agent Completed")
         except Exception as e:
             cli.print_error(f"Planner Agent Failed:\n{config.format_agent_error(e)}")
@@ -60,7 +61,7 @@ async def run_documentation_flow(project_path: str):
     # 3. README Generator Agent Stage
     with cli.console.status("[bold cyan]README Generator Agent Started (Writing Documentation)...[/bold cyan]", spinner="dots") as status:
         try:
-            readme_content = run_readme_generator(profile, directory_tree)
+            readme_content = await loop.run_in_executor(None, lambda: run_readme_generator(profile, directory_tree))
             cli.print_success("README Generator Completed")
         except Exception as e:
             cli.print_error(f"README Generator Agent Failed:\n{config.format_agent_error(e)}")
