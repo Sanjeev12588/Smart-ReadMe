@@ -4,6 +4,18 @@ import { marked } from 'marked';
 // Frontend request timeout (must be slightly longer than backend PIPELINE_TIMEOUT_SECONDS=300)
 const FETCH_TIMEOUT_MS = 330_000; // 5.5 minutes
 
+// Dynamically determine the backend URL.
+// If the app is run via the Vite local dev server (port is not 8050), point to localhost:8050.
+// If served by FastAPI directly (locally or on Railway), use a relative URL path.
+const getApiUrl = (path) => {
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    if (window.location.port !== '8050') {
+      return `http://127.0.0.1:8050${path}`;
+    }
+  }
+  return path;
+};
+
 function App() {
   // Input states
   const [inputSource, setInputSource] = useState('path'); // 'path' or 'url'
@@ -91,7 +103,7 @@ function App() {
 
       let response;
       try {
-        response = await fetch('http://127.0.0.1:8050/api/generate', {
+        response = await fetch(getApiUrl('/api/generate'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -110,9 +122,8 @@ function App() {
         }
         // Network-level failure (backend not running, connection refused, etc.)
         throw new Error(
-          'Cannot reach the backend server at http://127.0.0.1:8050. ' +
-          'Please make sure the FastAPI backend is running: ' +
-          'python -m uvicorn api:app --host 127.0.0.1 --port 8050 --reload'
+          `Cannot reach the backend server at ${getApiUrl('/api/generate')}. ` +
+          'Please make sure the FastAPI backend is running (e.g. python api.py)'
         );
       }
 

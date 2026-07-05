@@ -12,6 +12,8 @@ from pathlib import Path
 from typing import Optional, List
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 # Ensure project root is in sys.path
@@ -389,6 +391,43 @@ async def health_check():
     }
 
 
+# Serve frontend static files if the dist folder is present
+frontend_dist = Path(__file__).resolve().parent / "frontend" / "dist"
+if frontend_dist.exists():
+    print(f"[API] Serving React frontend from: {frontend_dist}")
+    
+    # Mount the /assets directory
+    assets_path = frontend_dist / "assets"
+    if assets_path.exists():
+        app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
+        
+    # Catch-all route to serve the built index.html or static files
+    @app.get("/{catchall:path}")
+    async def serve_frontend(catchall: str):
+        # Ignore API and API documentation paths
+        if catchall.startswith("api/") or catchall.startswith("docs") or catchall.startswith("openapi.json"):
+            raise HTTPException(status_code=404, detail="Not Found")
+            
+        file_path = frontend_dist / catchall
+        if file_path.is_file():
+            return FileResponse(file_path)
+            
+        index_file = frontend_dist / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Frontend index.html not found")
+
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("api:app", host="127.0.0.1", port=8050, reload=True)
+    host = os.getenv("HOST", "127.0.0.1")
+    port = int(os.getenv("PORT", "8050"))
+    reload = os.getenv("RELOAD", "true").lower() in ("true", "1", "yes")
+    
+    # Disable reload on Railway/production environments
+    is_prod = os.getenv("RAILWAY_ENVIRONMENT") or os.getenv("PORT")
+    if is_prod:
+        reload = False
+        
+    print(f"[API] Starting server on {host}:{port} (reload={reload})")
+    uvicorn.run("api:app", host=host, port=port, reload=reload)

@@ -10,8 +10,8 @@ from mcp.client.stdio import stdio_client
 import os
 
 # Timeout constants (seconds)
-MCP_TRANSPORT_TIMEOUT = 45   # How long to wait for the subprocess to start
-MCP_HANDSHAKE_TIMEOUT = 45   # How long to wait for the initialize handshake
+MCP_TRANSPORT_TIMEOUT = 180   # How long to wait for the subprocess to start
+MCP_HANDSHAKE_TIMEOUT = 180   # How long to wait for the initialize handshake
 
 class LocalMCPClient:
     """
